@@ -90,4 +90,5 @@ size_t Curl_multi_max_total_connections(struct Curl_multi *multi);
 
 void Curl_multi_closed(struct connectdata *conn, curl_socket_t s);
 
+CURLcode Curl_multi_easy_state(struct SessionHandle *data, long *valuep);
 #endif /* HEADER_CURL_MULTIIF_H */

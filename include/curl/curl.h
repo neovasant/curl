@@ -2066,6 +2066,22 @@ struct curl_tlssessioninfo {
   void *internals;
 };
 
+/* The XFER_STATE option returns state about the particular transfer. Not all
+   transfers will use all states. States may not be changed to in a numerical
+   order. In some cases a transfer can go back to a previously already visited
+   state. We may introduce new states in the future. */
+#define CURLXFER_INIT         0 /* nothing really happened yet */
+#define CURLXFER_NAMERES      1 /* name resolving */
+#define CURLXFER_CONNECT      2 /* TCP (or similar) connect */
+#define CURLXFER_PROTOCONNECT 3 /* protocol specific connect oriented ops */
+#define CURLXFER_PROXYCONNECT 4 /* proxy CONNECT procedure */
+#define CURLXFER_WAITDO       5 /* waiting to issue request */
+#define CURLXFER_DO           6 /* issuing request */
+#define CURLXFER_TRANSFER     7 /* transfer */
+#define CURLXFER_TOOFAST      8 /* toggled transfer due to rate limiting,
+                                   basically a variation of *TRANSFER */
+#define CURLXFER_DONE         9 /* transfer complete */
+
 #define CURLINFO_STRING   0x100000
 #define CURLINFO_LONG     0x200000
 #define CURLINFO_DOUBLE   0x300000
@@ -2118,9 +2134,10 @@ typedef enum {
   CURLINFO_LOCAL_IP         = CURLINFO_STRING + 41,
   CURLINFO_LOCAL_PORT       = CURLINFO_LONG   + 42,
   CURLINFO_TLS_SESSION      = CURLINFO_SLIST  + 43,
+  CURLINFO_XFER_STATE       = CURLINFO_LONG   + 44,
   /* Fill in new entries below here! */
 
-  CURLINFO_LASTONE          = 43
+  CURLINFO_LASTONE          = 44
 } CURLINFO;
 
 /* CURLINFO_RESPONSE_CODE is the new name for the option previously known as

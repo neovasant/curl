@@ -198,7 +198,9 @@ static CURLcode getinfo_long(struct SessionHandle *data, CURLINFO info,
   case CURLINFO_RTSP_CSEQ_RECV:
     *param_longp = data->state.rtsp_CSeq_recv;
     break;
-
+  case CURLINFO_XFER_STATE:
+    return Curl_multi_easy_state(data, param_longp);  
+    break;
   default:
     return CURLE_BAD_FUNCTION_ARGUMENT;
   }
